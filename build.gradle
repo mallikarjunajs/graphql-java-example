@@ -1,0 +1,44 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.lmd'
+version = 1
+
+description = "grapqhl project"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+}
+
+def getVersion() {
+    Properties releaseProperties = new Properties()
+    releaseProperties.load(new FileInputStream('release.properties'))
+    return releaseProperties.version
+}
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.0.RELEASE'
+    compile 'com.graphql-java:graphql-spring-boot-starter:4.2.0'
+    compile 'com.graphql-java:graphiql-spring-boot-starter:5.0.2'
+    compile 'io.leangen.graphql:spqr:0.9.7'
+}
